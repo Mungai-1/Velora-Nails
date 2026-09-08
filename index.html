@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velora — House of Nails, Nairobi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0E1512;
+    --bg-deep:#0A100D;
+    --panel:#141F1A;
+    --oxblood:#5C1A1A;
+    --gold:#C9A227;
+    --gold-soft:#E4C868;
+    --ivory:#F3ECD9;
+    --line: rgba(243,236,217,0.14);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--bg); color:var(--ivory);
+    font-family:'Jost',sans-serif; font-weight:300;
+    font-size:16px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.serif{ font-family:'Cormorant Garamond',serif; font-weight:500; margin:0; }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  button{font-family:inherit;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+  @media(max-width:640px){.wrap{padding:0 20px;}}
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{outline:1px solid var(--gold-soft); outline-offset:3px;}
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:80;
+    background:rgba(14,21,18,0.88); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{display:flex; align-items:center; justify-content:space-between; padding:24px 32px; max-width:1180px; margin:0 auto;}
+  .logo{font-family:'Cormorant Garamond',serif; font-size:26px; letter-spacing:0.04em;}
+  .navlinks{display:flex; gap:38px; font-size:14px; font-weight:300;}
+  .navlinks a{opacity:0.82; transition:opacity .2s; position:relative; padding-bottom:3px;}
+  .navlinks a.active{opacity:1; color:var(--gold-soft);}
+  .navlinks a:hover{opacity:1; color:var(--gold-soft);}
+  .nav-right{display:flex; align-items:center; gap:18px;}
+  .nav-cta{ border:1px solid var(--gold); color:var(--gold-soft); padding:10px 24px; font-size:13px; white-space:nowrap; }
+  .nav-cta:hover{background:var(--gold); color:var(--bg-deep);}
+  .menu-toggle{
+    display:none; background:none; border:1px solid var(--line); color:var(--ivory);
+    width:42px; height:42px; border-radius:2px; cursor:pointer; position:relative;
+  }
+  .menu-toggle span, .menu-toggle::before, .menu-toggle::after{
+    content:''; position:absolute; left:11px; right:11px; height:1px; background:var(--ivory); transition:transform .25s ease, opacity .25s ease;
+  }
+  .menu-toggle::before{top:15px;}
+  .menu-toggle span{top:20px;}
+  .menu-toggle::after{top:25px;}
+  .menu-toggle.open::before{transform:translateY(5px) rotate(45deg);}
+  .menu-toggle.open::after{transform:translateY(-5px) rotate(-45deg);}
+  .menu-toggle.open span{opacity:0;}
+  @media(max-width:840px){ .navlinks{display:none;} .menu-toggle{display:block;} }
+
+  .mobile-panel{
+    position:fixed; inset:0; background:var(--bg-deep); z-index:90;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:34px;
+    transform:translateY(-100%); transition:transform .35s ease;
+  }
+  .mobile-panel.open{transform:translateY(0);}
+  .mobile-panel a{font-family:'Cormorant Garamond',serif; font-size:30px; font-style:italic;}
+  .mobile-panel .nav-cta{margin-top:10px;}
+  .mobile-close{position:absolute; top:26px; right:28px; background:none; border:none; color:var(--ivory); font-size:28px; cursor:pointer; line-height:1;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; min-height:92vh; display:flex; align-items:center;
+    overflow:hidden; border-bottom:1px solid var(--line);
+  }
+  .hero-bg{
+    position:absolute; inset:0; z-index:0;
+    background-image:
+      linear-gradient(100deg, rgba(10,16,13,0.94) 0%, rgba(10,16,13,0.75) 42%, rgba(10,16,13,0.35) 75%),
+      url('https://images.unsplash.com/photo-1604654894610-df63bc536371?fm=jpg&q=80&w=1800&auto=format&fit=crop');
+    background-size:cover; background-position:center;
+  }
+  .hero-inner{position:relative; z-index:2; max-width:720px; padding:100px 32px;}
+  .hero-kicker{font-size:13px; letter-spacing:0.08em; color:var(--gold-soft); margin-bottom:24px; display:flex; align-items:center; gap:12px;}
+  .live-dot{width:7px; height:7px; border-radius:50%; background:var(--gold-soft); display:inline-block; animation:pulse 2s ease-in-out infinite;}
+  @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:0.35;} }
+  .hero h1{font-size:clamp(44px,6.6vw,86px); line-height:1.03; font-style:italic;}
+  .hero h1 em{font-style:normal; color:var(--gold-soft);}
+  .hero-sub{margin-top:26px; font-size:18px; max-width:460px; color:rgba(243,236,217,0.78); font-weight:300;}
+  .hero-actions{margin-top:40px; display:flex; gap:20px; flex-wrap:wrap; align-items:center;}
+  .btn{display:inline-flex; align-items:center; gap:10px; padding:16px 30px; font-size:13.5px; letter-spacing:0.03em; border:1px solid transparent; cursor:pointer; background:none;}
+  .btn-gold{background:var(--gold); color:var(--bg-deep);}
+  .btn-gold:hover{background:var(--gold-soft);}
+  .btn-line{border-color:var(--line); color:var(--ivory);}
+  .btn-line:hover{border-color:var(--gold-soft); color:var(--gold-soft);}
+  .availability{margin-top:34px; font-size:13.5px; color:rgba(243,236,217,0.7);}
+  .availability b{color:var(--gold-soft); font-weight:400; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:16px;}
+
+  /* ---------- STRIP ---------- */
+  .strip{border-bottom:1px solid var(--line); padding:22px 0; overflow:hidden; white-space:nowrap;}
+  .strip-track{display:inline-block; padding-left:100%; animation:scroll 32s linear infinite;}
+  .strip-track span{margin:0 30px; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:19px; color:rgba(243,236,217,0.55);}
+  .strip-track span.gold{color:var(--gold-soft);}
+  @keyframes scroll{ from{transform:translateX(0);} to{transform:translateX(-100%);} }
+
+  /* ---------- SECTION ---------- */
+  section{padding:120px 0;}
+  .kicker{font-size:13px; letter-spacing:0.06em; color:var(--gold-soft); margin-bottom:20px;}
+  .section-title{font-size:clamp(32px,4.4vw,50px); font-style:italic; max-width:600px;}
+  .section-title em{font-style:normal; color:var(--gold-soft);}
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid; grid-template-columns:0.85fr 1.15fr; gap:80px; align-items:center;}
+  @media(max-width:860px){.about-grid{grid-template-columns:1fr;}}
+  .about-frame{ aspect-ratio:3/4; border:1px solid var(--gold); padding:18px; position:relative; }
+  .about-frame-inner{ width:100%; height:100%; overflow:hidden; position:relative; }
+  .about-frame-inner img{width:100%; height:100%; object-fit:cover; filter:saturate(0.9) contrast(1.05);}
+  .about-text p{color:rgba(243,236,217,0.78); font-size:16.5px; margin:24px 0;}
+  .signature{font-family:'Cormorant Garamond',serif; font-style:italic; font-size:22px; color:var(--gold-soft); margin-top:12px;}
+
+  /* ---------- SERVICES ---------- */
+  .menu-columns{display:grid; grid-template-columns:1fr 1fr; gap:70px; margin-top:60px;}
+  @media(max-width:800px){.menu-columns{grid-template-columns:1fr;}}
+  .menu-column h3{font-size:15px; text-transform:uppercase; letter-spacing:0.08em; font-family:'Jost',sans-serif; font-weight:400; color:var(--gold-soft); margin-bottom:26px; padding-bottom:14px; border-bottom:1px solid var(--line);}
+  .menu-item{display:flex; justify-content:space-between; align-items:baseline; gap:16px; padding:18px 0; border-bottom:1px dotted rgba(243,236,217,0.2); cursor:pointer;}
+  .menu-item .name{font-family:'Cormorant Garamond',serif; font-size:21px;}
+  .menu-item .desc{display:block; font-size:13px; color:rgba(243,236,217,0.55); margin-top:4px; font-weight:300;}
+  .menu-item .price{white-space:nowrap; font-size:14.5px; color:var(--gold-soft);}
+  .menu-item.selected{background:rgba(201,162,39,0.07);}
+  .menu-item.selected .name{color:var(--gold-soft);}
+
+  /* ---------- GALLERY ---------- */
+  .gallery{background:var(--panel); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .gallery-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:56px;}
+  @media(max-width:760px){.gallery-grid{grid-template-columns:repeat(2,1fr);}}
+  .gallery-cell{aspect-ratio:3/4; position:relative; overflow:hidden; cursor:pointer; border:none; padding:0; background:none;}
+  .gallery-cell img{width:100%; height:100%; object-fit:cover; transition:transform .5s ease;}
+  .gallery-cell:hover img{transform:scale(1.06);}
+  .gallery-cell .cap{position:absolute; bottom:14px; left:14px; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:16px; color:var(--ivory); z-index:2;}
+  .gallery-cell::after{content:'';position:absolute; inset:0; background:linear-gradient(0deg, rgba(0,0,0,0.6), transparent 50%);}
+
+  /* Lightbox */
+  .lightbox{position:fixed; inset:0; background:rgba(10,16,13,0.94); z-index:100; display:none; align-items:center; justify-content:center; padding:40px;}
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:min(760px,90vw); max-height:80vh; object-fit:contain; border:1px solid var(--line);}
+  .lightbox-cap{position:absolute; bottom:60px; left:0; right:0; text-align:center; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:20px; color:var(--gold-soft);}
+  .lightbox-close{position:absolute; top:28px; right:32px; background:none; border:none; color:var(--ivory); font-size:30px; cursor:pointer; line-height:1;}
+  .lightbox-nav{position:absolute; top:50%; transform:translateY(-50%); background:none; border:1px solid var(--line); color:var(--ivory); width:44px; height:44px; cursor:pointer; font-size:18px;}
+  .lightbox-prev{left:24px;} .lightbox-next{right:24px;}
+
+  /* ---------- PROCESS ---------- */
+  .process-row{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:56px;}
+  @media(max-width:760px){.process-row{grid-template-columns:repeat(2,1fr);}}
+  .process-item{background:var(--bg); padding:36px 28px;}
+  .process-item .roman{font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--gold-soft); font-size:26px; display:block; margin-bottom:16px;}
+  .process-item h4{font-family:'Jost',sans-serif; font-weight:400; font-size:15px; margin-bottom:8px;}
+  .process-item p{font-size:13.5px; color:rgba(243,236,217,0.6);}
+
+  /* ---------- TESTIMONIALS ---------- */
+  .test-wrap{max-width:720px; margin:56px auto 0; position:relative; text-align:center;}
+  .test-slide{display:none;}
+  .test-slide.active{display:block; animation:fadein .5s ease;}
+  @keyframes fadein{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+  .test-slide p{font-family:'Cormorant Garamond',serif; font-style:italic; font-size:24px; line-height:1.5; margin-bottom:22px;}
+  .test-slide cite{font-style:normal; font-size:13px; color:rgba(243,236,217,0.55);}
+  .test-controls{display:flex; align-items:center; justify-content:center; gap:22px; margin-top:38px;}
+  .test-arrow{background:none; border:1px solid var(--line); color:var(--ivory); width:38px; height:38px; cursor:pointer;}
+  .test-arrow:hover{border-color:var(--gold-soft); color:var(--gold-soft);}
+  .test-dots{display:flex; gap:9px;}
+  .test-dot{width:7px; height:7px; border-radius:50%; background:rgba(243,236,217,0.3); border:none; cursor:pointer; padding:0;}
+  .test-dot.active{background:var(--gold-soft);}
+
+  /* ---------- FAQ ---------- */
+  .faq-list{max-width:760px; margin:56px auto 0; border-top:1px solid var(--line);}
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{
+    width:100%; text-align:left; background:none; border:none; color:var(--ivory);
+    padding:26px 4px; font-family:'Cormorant Garamond',serif; font-size:21px; font-style:italic;
+    display:flex; justify-content:space-between; align-items:center; cursor:pointer;
+  }
+  .faq-q .icon{font-size:20px; color:var(--gold-soft); transition:transform .25s ease;}
+  .faq-item.open .faq-q .icon{transform:rotate(45deg);}
+  .faq-a{max-height:0; overflow:hidden; transition:max-height .3s ease;}
+  .faq-a p{padding:0 4px 26px; font-size:15px; color:rgba(243,236,217,0.68); max-width:600px;}
+
+  /* ---------- BOOKING ---------- */
+  .book-section{background:linear-gradient(160deg, var(--oxblood), #3a1010); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .book-grid{display:grid; grid-template-columns:0.85fr 1.15fr; gap:70px;}
+  @media(max-width:900px){.book-grid{grid-template-columns:1fr;}}
+  .book-grid h2{font-size:clamp(32px,4.6vw,52px); font-style:italic; margin-bottom:20px;}
+  .book-grid > div:first-child p{color:rgba(243,236,217,0.8); font-size:15.5px; max-width:400px;}
+  .hours-list{margin-top:30px; border-top:1px solid rgba(243,236,217,0.25);}
+  .hours-row{display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid rgba(243,236,217,0.25); font-size:14px;}
+
+  form.booking{display:grid; gap:18px;}
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  @media(max-width:560px){.field-row{grid-template-columns:1fr;}}
+  label{display:block; font-size:12.5px; letter-spacing:0.04em; color:rgba(243,236,217,0.7); margin-bottom:8px;}
+  input, select, textarea{
+    width:100%; background:rgba(10,16,13,0.35); border:1px solid rgba(243,236,217,0.3); color:var(--ivory);
+    padding:13px 14px; font-family:'Jost',sans-serif; font-size:14.5px; font-weight:300;
+  }
+  input::placeholder, textarea::placeholder{color:rgba(243,236,217,0.4);}
+  textarea{resize:vertical; min-height:80px;}
+  .field-error{border-color:#e07a5f !important;}
+  .error-text{font-size:12px; color:#f2a08a; margin-top:6px; display:none;}
+  .error-text.show{display:block;}
+  .book-submit{margin-top:6px; justify-self:start;}
+  .form-note{font-size:12.5px; color:rgba(243,236,217,0.55); margin-top:4px;}
+  .form-success{
+    display:none; margin-top:16px; padding:16px 18px; border:1px solid var(--gold-soft);
+    font-size:14px; color:var(--gold-soft);
+  }
+  .form-success.show{display:block;}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:70px 0 30px;}
+  .foot-grid{display:grid; grid-template-columns:1.3fr 1fr 1fr 1fr; gap:40px; padding-bottom:44px; border-bottom:1px solid var(--line);}
+  @media(max-width:760px){.foot-grid{grid-template-columns:1fr 1fr;}}
+  .foot-grid h4{font-family:'Jost',sans-serif; font-weight:400; font-size:13px; letter-spacing:0.06em; color:var(--gold-soft); margin-bottom:18px;}
+  .foot-grid a{display:block; margin-bottom:11px; font-size:14px; color:rgba(243,236,217,0.75);}
+  .foot-grid a:hover{color:var(--gold-soft);}
+  .foot-bottom{display:flex; justify-content:space-between; padding-top:26px; font-size:12.5px; color:rgba(243,236,217,0.45); flex-wrap:wrap; gap:10px;}
+
+  .sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0);}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">VELORA</div>
+    <div class="navlinks" id="navlinks">
+      <a href="#atelier" data-nav>Atelier</a>
+      <a href="#menu" data-nav>Treatments</a>
+      <a href="#gallery" data-nav>Gallery</a>
+      <a href="#faq" data-nav>FAQ</a>
+      <a href="#reserve" data-nav>Reserve</a>
+    </div>
+    <div class="nav-right">
+      <a class="nav-cta" href="#reserve">Reserve a chair</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false"><span></span></button>
+    </div>
+  </nav>
+</header>
+
+<div class="mobile-panel" id="mobilePanel">
+  <button class="mobile-close" id="mobileClose" aria-label="Close menu">×</button>
+  <a href="#atelier" data-nav>Atelier</a>
+  <a href="#menu" data-nav>Treatments</a>
+  <a href="#gallery" data-nav>Gallery</a>
+  <a href="#faq" data-nav>FAQ</a>
+  <a href="#reserve" data-nav>Reserve</a>
+  <a class="nav-cta" href="#reserve" data-nav>Reserve a chair</a>
+</div>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div class="hero-kicker"><span class="live-dot"></span> Westlands, Nairobi — by appointment</div>
+    <h1>An evening<br>for your <em>hands.</em></h1>
+    <p class="hero-sub">Velora is a private nail atelier for occasions that matter — weddings, galas, red carpets and the quiet luxury of a Tuesday well spent.</p>
+    <div class="hero-actions">
+      <a class="btn btn-gold" href="#reserve">Reserve your appointment</a>
+      <a class="btn btn-line" href="#menu">View treatments</a>
+    </div>
+    <div class="availability" id="availabilityText">Checking tonight's availability…</div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="strip-track">
+    <span class="gold">Bridal parties</span><span>Evening extensions</span><span class="gold">Hand restoration</span><span>Private studio hire</span><span class="gold">Gel &amp; hard gel</span><span>Bridal parties</span><span class="gold">Evening extensions</span><span>Hand restoration</span><span class="gold">Private studio hire</span><span>Gel &amp; hard gel</span>
+  </div>
+</div>
+
+<section id="atelier">
+  <div class="wrap about-grid">
+    <div class="about-frame">
+      <div class="about-frame-inner">
+        <img src="https://images.unsplash.com/photo-1720343409646-960f6dcccae3?fm=jpg&q=80&w=900&auto=format&fit=crop" alt="Close-up of a client's hands with polished nails and gold rings, resting elegantly">
+      </div>
+    </div>
+    <div class="about-text">
+      <div class="kicker">The atelier</div>
+      <h2 class="section-title">Precision, kept <em>quiet.</em></h2>
+      <p>Velora holds four chairs a night, by appointment only. Each sitting is built around one client — no side-by-side stations, no overlapping bookings.</p>
+      <p>Our technicians train in Milan, Seoul and Nairobi, and every set is finished under a private lamp with a glass of something cold, because an evening should feel like one.</p>
+      <div class="signature">— Njoki Wambui, Founder</div>
+    </div>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="wrap">
+    <div class="kicker">Treatments</div>
+    <h2 class="section-title">A short, considered <em>menu.</em></h2>
+    <p style="margin-top:14px; font-size:14px; color:rgba(243,236,217,0.55);">Tap a treatment to carry it straight into your reservation form.</p>
+    <div class="menu-columns">
+      <div class="menu-column">
+        <h3>Hands</h3>
+        <div class="menu-item" data-service="The Velora Manicure" data-price="KSh 3,200"><div><span class="name">The Velora Manicure</span><span class="desc">Shape, cuticle work, extended hand massage.</span></div><span class="price">KSh 3,200</span></div>
+        <div class="menu-item" data-service="Hard Gel Overlay" data-price="KSh 4,500"><div><span class="name">Hard Gel Overlay</span><span class="desc">Strength and shine, natural nail preserved.</span></div><span class="price">KSh 4,500</span></div>
+        <div class="menu-item" data-service="Sculpted Length" data-price="KSh 6,000"><div><span class="name">Sculpted Length</span><span class="desc">Bespoke shape and length, hand-built on site.</span></div><span class="price">KSh 6,000</span></div>
+        <div class="menu-item" data-service="Evening Nail Art" data-price="from KSh 500 / nail"><div><span class="name">Evening Nail Art</span><span class="desc">Hand-painted detail, foil or fine chrome.</span></div><span class="price">from KSh 500 / nail</span></div>
+      </div>
+      <div class="menu-column">
+        <h3>Feet &amp; Occasion</h3>
+        <div class="menu-item" data-service="The Velora Pedicure" data-price="KSh 4,000"><div><span class="name">The Velora Pedicure</span><span class="desc">Extended soak, callus treatment, warm oil finish.</span></div><span class="price">KSh 4,000</span></div>
+        <div class="menu-item" data-service="Bridal Sitting" data-price="on request"><div><span class="name">Bridal Sitting</span><span class="desc">Full party, in-studio or on location.</span></div><span class="price">on request</span></div>
+        <div class="menu-item" data-service="Private Studio Hire" data-price="on request"><div><span class="name">Private Studio Hire</span><span class="desc">The whole atelier, reserved for your event.</span></div><span class="price">on request</span></div>
+        <div class="menu-item" data-service="Hand Restoration" data-price="KSh 3,800"><div><span class="name">Hand Restoration</span><span class="desc">Paraffin, exfoliation and repair for overworked hands.</span></div><span class="price">KSh 3,800</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <div class="wrap">
+    <div class="kicker">Recent work</div>
+    <h2 class="section-title">A quiet <em>study</em> in finish.</h2>
+    <div class="gallery-grid" id="galleryGrid">
+      <button class="gallery-cell" data-cap="Black manicure, silver ring" data-full="https://images.unsplash.com/photo-1604654894611-6973b376cbde?fm=jpg&q=85&w=1200&auto=format&fit=crop">
+        <img src="https://images.unsplash.com/photo-1604654894611-6973b376cbde?fm=jpg&q=70&w=600&auto=format&fit=crop" alt="Hand with black manicure and a silver ring">
+        <span class="cap">Onyx, high gloss</span>
+      </button>
+      <button class="gallery-cell" data-cap="Ornate navy, gold and white detail" data-full="https://images.unsplash.com/photo-1754799670312-8e7da8e40ad7?fm=jpg&q=85&w=1200&auto=format&fit=crop">
+        <img src="https://images.unsplash.com/photo-1754799670312-8e7da8e40ad7?fm=jpg&q=70&w=600&auto=format&fit=crop" alt="Hand with ornate navy, gold and white nail art">
+        <span class="cap">Navy &amp; champagne</span>
+      </button>
+      <button class="gallery-cell" data-cap="Neutral tone, diamond ring" data-full="https://images.unsplash.com/photo-1588015810531-dd522c9c8bbb?fm=jpg&q=85&w=1200&auto=format&fit=crop">
+        <img src="https://images.unsplash.com/photo-1588015810531-dd522c9c8bbb?fm=jpg&q=70&w=600&auto=format&fit=crop" alt="Hand with neutral manicure and a diamond ring">
+        <span class="cap">Café au lait, almond</span>
+      </button>
+      <button class="gallery-cell" data-cap="Tortoiseshell finish, gold ring" data-full="https://images.unsplash.com/photo-1604654894610-df63bc536371?fm=jpg&q=85&w=1200&auto=format&fit=crop">
+        <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?fm=jpg&q=70&w=600&auto=format&fit=crop" alt="Hand with tortoiseshell pattern nails and a gold ring">
+        <span class="cap">Tortoiseshell, gold</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">×</button>
+  <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous image">‹</button>
+  <img id="lightboxImg" src="" alt="">
+  <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next image">›</button>
+  <div class="lightbox-cap" id="lightboxCap"></div>
+</div>
+
+<section id="process">
+  <div class="wrap">
+    <div class="kicker">Reserving a chair</div>
+    <h2 class="section-title">Three steps, <em>no rush.</em></h2>
+    <div class="process-row">
+      <div class="process-item"><span class="roman">I</span><h4>Send an enquiry</h4><p>Message us your date, occasion and preferred treatment.</p></div>
+      <div class="process-item"><span class="roman">II</span><h4>We confirm your chair</h4><p>A single chair, held for the full length of your sitting.</p></div>
+      <div class="process-item"><span class="roman">III</span><h4>Arrive, unhurried</h4><p>Refreshments on arrival, no other client sharing your session.</p></div>
+      <div class="process-item"><span class="roman">IV</span><h4>Aftercare, sent home</h4><p>A small kit and a note on your next appointment window.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">In their words</div>
+    <h2 class="section-title" style="margin:0 auto;">From recent <em>evenings.</em></h2>
+    <div class="test-wrap">
+      <div class="test-slide active">
+        <p>"I booked Velora for my wedding morning and they held the whole room for just us. Nothing was rushed."</p>
+        <cite>— Amara K., bridal party of six</cite>
+      </div>
+      <div class="test-slide">
+        <p>"The most precise hard gel work I've had outside of Seoul. My set lasted five weeks."</p>
+        <cite>— Diana O.</cite>
+      </div>
+      <div class="test-slide">
+        <p>"It's the only appointment in my week where no one is trying to upsell me anything."</p>
+        <cite>— Sarah M.</cite>
+      </div>
+      <div class="test-controls">
+        <button class="test-arrow" id="testPrev" aria-label="Previous testimonial">‹</button>
+        <div class="test-dots" id="testDots"></div>
+        <button class="test-arrow" id="testNext" aria-label="Next testimonial">›</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap" style="text-align:center;">
+    <div class="kicker">Good to know</div>
+    <h2 class="section-title" style="margin:0 auto;">A few <em>questions</em> answered.</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">How far ahead should I book? <span class="icon">+</span></button>
+        <div class="faq-a"><p>Weeknights can usually be arranged within a day or two. Weekend evenings and bridal sittings are best booked one to two weeks ahead, especially around December and wedding season.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Can I bring a group? <span class="icon">+</span></button>
+        <div class="faq-a"><p>Yes — with notice we can hold multiple chairs for the same evening, or arrange a private studio hire for larger bridal or event parties.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Do you come to me? <span class="icon">+</span></button>
+        <div class="faq-a"><p>For bridal mornings and select events, yes. Mention your location when you enquire and we'll confirm whether on-location service is available that day.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">What if I need to reschedule? <span class="icon">+</span></button>
+        <div class="faq-a"><p>Message us on WhatsApp at least 12 hours ahead and we'll move your chair to another time that week, no charge.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="book-section" id="reserve">
+  <div class="wrap book-grid">
+    <div>
+      <div class="kicker" style="color:var(--gold-soft);">Reserve a chair</div>
+      <h2>Your evening<br>starts with <em style="color:var(--gold-soft); font-style:normal;">one message.</em></h2>
+      <p>Fill in your details and we'll open WhatsApp with everything pre-filled — just hit send. Chairs are held on a first-enquiry basis.</p>
+      <div class="hours-list">
+        <div class="hours-row"><span>Tuesday – Friday</span><span>11:00 – 20:00</span></div>
+        <div class="hours-row"><span>Saturday</span><span>10:00 – 19:00</span></div>
+        <div class="hours-row"><span>Sunday – Monday</span><span>Closed</span></div>
+      </div>
+    </div>
+    <div>
+      <form class="booking" id="bookingForm" novalidate>
+        <div class="field-row">
+          <div>
+            <label for="fName">Full name</label>
+            <input type="text" id="fName" name="name" placeholder="Your name" required>
+            <span class="error-text" id="errName">Please tell us your name.</span>
+          </div>
+          <div>
+            <label for="fPhone">Phone or WhatsApp number</label>
+            <input type="tel" id="fPhone" name="phone" placeholder="07xx xxx xxx" required>
+            <span class="error-text" id="errPhone">Please add a valid phone number.</span>
+          </div>
+        </div>
+        <div>
+          <label for="fService">Treatment</label>
+          <select id="fService" name="service">
+            <option value="">Not sure yet — happy to advise</option>
+            <option>The Velora Manicure</option>
+            <option>Hard Gel Overlay</option>
+            <option>Sculpted Length</option>
+            <option>Evening Nail Art</option>
+            <option>The Velora Pedicure</option>
+            <option>Bridal Sitting</option>
+            <option>Private Studio Hire</option>
+            <option>Hand Restoration</option>
+          </select>
+        </div>
+        <div class="field-row">
+          <div>
+            <label for="fDate">Preferred date</label>
+            <input type="date" id="fDate" name="date" required>
+            <span class="error-text" id="errDate">Please choose a date (Tue–Sat).</span>
+          </div>
+          <div>
+            <label for="fTime">Preferred time</label>
+            <input type="time" id="fTime" name="time">
+          </div>
+        </div>
+        <div>
+          <label for="fNotes">Anything we should know?</label>
+          <textarea id="fNotes" name="notes" placeholder="Occasion, party size, allergies, inspiration photos to bring…"></textarea>
+        </div>
+        <button type="submit" class="btn btn-gold book-submit">Send to WhatsApp</button>
+        <p class="form-note">This opens WhatsApp with your details pre-filled — nothing is booked until we confirm.</p>
+        <div class="form-success" id="formSuccess">Opening WhatsApp with your enquiry — see you soon.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h4>VELORA</h4>
+        <p style="font-size:14px; color:rgba(243,236,217,0.6); max-width:240px;">A private nail atelier in Westlands, Nairobi. By appointment only.</p>
+      </div>
+      <div>
+        <h4>ATELIER</h4>
+        <a href="#atelier">Our story</a>
+        <a href="#menu">Treatments</a>
+        <a href="#gallery">Gallery</a>
+      </div>
+      <div>
+        <h4>VISIT</h4>
+        <a href="#">Westlands, Nairobi</a>
+        <a href="#">Tue – Sat, by appointment</a>
+      </div>
+      <div>
+        <h4>CONTACT</h4>
+        <a href="tel:+254722000000">+254 722 000 000</a>
+        <a href="mailto:reserve@velora.co.ke">reserve@velora.co.ke</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Velora House of Nails. Sample concept site.</span>
+      <span>Polished build</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var WHATSAPP_NUMBER = "254722000000";
+
+  /* ---------- Mobile menu ---------- */
+  var menuToggle = document.getElementById('menuToggle');
+  var mobilePanel = document.getElementById('mobilePanel');
+  var mobileClose = document.getElementById('mobileClose');
+  function openMenu(){ mobilePanel.classList.add('open'); menuToggle.classList.add('open'); menuToggle.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden'; }
+  function closeMenu(){ mobilePanel.classList.remove('open'); menuToggle.classList.remove('open'); menuToggle.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }
+  menuToggle.addEventListener('click', function(){ mobilePanel.classList.contains('open') ? closeMenu() : openMenu(); });
+  mobileClose.addEventListener('click', closeMenu);
+  mobilePanel.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
+
+  /* ---------- Active nav link on scroll ---------- */
+  var navSections = ['atelier','menu','gallery','faq','reserve'].map(function(id){ return document.getElementById(id); }).filter(Boolean);
+  var navLinks = document.querySelectorAll('#navlinks a[data-nav]');
+  function updateActiveNav(){
+    var scrollPos = window.scrollY + 140;
+    var current = null;
+    navSections.forEach(function(sec){ if(sec.offsetTop <= scrollPos) current = sec.id; });
+    navLinks.forEach(function(link){
+      link.classList.toggle('active', current && link.getAttribute('href') === '#' + current);
+    });
+  }
+  window.addEventListener('scroll', updateActiveNav, {passive:true});
+  updateActiveNav();
+
+  /* ---------- Availability badge ---------- */
+  var availEl = document.getElementById('availabilityText');
+  function computeAvailability(){
+    var now = new Date();
+    var day = now.getDay(); // 0 Sun ... 6 Sat
+    var hour = now.getHours();
+    var openDays = {2:true,3:true,4:true,5:true,6:true}; // Tue(2)-Sat(6)
+    var closeHour = (day===6) ? 19 : 20;
+    var openHour = (day===6) ? 10 : 11;
+    if(openDays[day] && hour >= openHour && hour < closeHour){
+      var slots = ["6:30pm","7:15pm","8:00pm"];
+      var pick = slots[now.getMinutes() % slots.length];
+      availEl.innerHTML = 'Tonight: a chair may still be open around <b>' + pick + '</b> — enquire to confirm.';
+    } else {
+      var d = new Date(now);
+      do { d.setDate(d.getDate()+1); } while(!openDays[d.getDay()]);
+      var label = d.toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'});
+      availEl.innerHTML = 'We reopen <b>' + label + '</b> — reserve your chair ahead of time.';
+    }
+  }
+  computeAvailability();
+
+  /* ---------- Menu item -> booking form ---------- */
+  var menuItems = document.querySelectorAll('.menu-item[data-service]');
+  var serviceSelect = document.getElementById('fService');
+  menuItems.forEach(function(item){
+    item.addEventListener('click', function(){
+      menuItems.forEach(function(i){ i.classList.remove('selected'); });
+      item.classList.add('selected');
+      var service = item.getAttribute('data-service');
+      Array.prototype.forEach.call(serviceSelect.options, function(opt){
+        if(opt.value === service) serviceSelect.value = service;
+      });
+      document.getElementById('reserve').scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth'});
+      document.getElementById('fName').focus({preventScroll:true});
+    });
+  });
+
+  /* ---------- Gallery lightbox ---------- */
+  var cells = Array.prototype.slice.call(document.querySelectorAll('.gallery-cell'));
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+  var lightboxCap = document.getElementById('lightboxCap');
+  var currentIndex = 0;
+  function showImage(i){
+    currentIndex = (i + cells.length) % cells.length;
+    var cell = cells[currentIndex];
+    lightboxImg.src = cell.getAttribute('data-full');
+    lightboxImg.alt = cell.getAttribute('data-cap');
+    lightboxCap.textContent = cell.getAttribute('data-cap');
+  }
+  cells.forEach(function(cell, i){
+    cell.addEventListener('click', function(){
+      showImage(i);
+      lightbox.classList.add('open');
+      document.body.style.overflow='hidden';
+    });
+  });
+  function closeLightbox(){ lightbox.classList.remove('open'); document.body.style.overflow=''; }
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  document.getElementById('lightboxPrev').addEventListener('click', function(){ showImage(currentIndex-1); });
+  document.getElementById('lightboxNext').addEventListener('click', function(){ showImage(currentIndex+1); });
+  lightbox.addEventListener('click', function(e){ if(e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', function(e){
+    if(!lightbox.classList.contains('open')) return;
+    if(e.key === 'Escape') closeLightbox();
+    if(e.key === 'ArrowLeft') showImage(currentIndex-1);
+    if(e.key === 'ArrowRight') showImage(currentIndex+1);
+  });
+
+  /* ---------- Testimonial carousel ---------- */
+  var slides = document.querySelectorAll('.test-slide');
+  var dotsWrap = document.getElementById('testDots');
+  var tIndex = 0;
+  var autoTimer;
+  slides.forEach(function(_, i){
+    var dot = document.createElement('button');
+    dot.className = 'test-dot' + (i===0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Go to testimonial ' + (i+1));
+    dot.addEventListener('click', function(){ goToSlide(i); resetAuto(); });
+    dotsWrap.appendChild(dot);
+  });
+  var dots = dotsWrap.querySelectorAll('.test-dot');
+  function goToSlide(i){
+    slides[tIndex].classList.remove('active');
+    dots[tIndex].classList.remove('active');
+    tIndex = (i + slides.length) % slides.length;
+    slides[tIndex].classList.add('active');
+    dots[tIndex].classList.add('active');
+  }
+  document.getElementById('testPrev').addEventListener('click', function(){ goToSlide(tIndex-1); resetAuto(); });
+  document.getElementById('testNext').addEventListener('click', function(){ goToSlide(tIndex+1); resetAuto(); });
+  function startAuto(){ if(reduceMotion) return; autoTimer = setInterval(function(){ goToSlide(tIndex+1); }, 6000); }
+  function resetAuto(){ clearInterval(autoTimer); startAuto(); }
+  startAuto();
+  var testWrap = document.querySelector('.test-wrap');
+  testWrap.addEventListener('mouseenter', function(){ clearInterval(autoTimer); });
+  testWrap.addEventListener('mouseleave', startAuto);
+
+  /* ---------- FAQ accordion ---------- */
+  document.querySelectorAll('.faq-item').forEach(function(item){
+    var q = item.querySelector('.faq-q');
+    var a = item.querySelector('.faq-a');
+    q.addEventListener('click', function(){
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function(openItem){
+        openItem.classList.remove('open');
+        openItem.querySelector('.faq-q').setAttribute('aria-expanded','false');
+        openItem.querySelector('.faq-a').style.maxHeight = null;
+      });
+      if(!isOpen){
+        item.classList.add('open');
+        q.setAttribute('aria-expanded','true');
+        a.style.maxHeight = a.scrollHeight + 'px';
+      }
+    });
+  });
+
+  /* ---------- Booking form -> WhatsApp ---------- */
+  var form = document.getElementById('bookingForm');
+  var successBox = document.getElementById('formSuccess');
+  var todayISO = new Date().toISOString().split('T')[0];
+  document.getElementById('fDate').setAttribute('min', todayISO);
+
+  function setError(input, errorEl, show){
+    input.classList.toggle('field-error', show);
+    if(errorEl) errorEl.classList.toggle('show', show);
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    successBox.classList.remove('show');
+
+    var name = document.getElementById('fName').value.trim();
+    var phone = document.getElementById('fPhone').value.trim();
+    var dateVal = document.getElementById('fDate').value;
+    var service = document.getElementById('fService').value;
+    var time = document.getElementById('fTime').value;
+    var notes = document.getElementById('fNotes').value.trim();
+
+    var phoneDigits = phone.replace(/[^0-9+]/g,'');
+    var validName = name.length > 1;
+    var validPhone = phoneDigits.replace(/[^0-9]/g,'').length >= 9;
+    var validDate = !!dateVal;
+
+    setError(document.getElementById('fName'), document.getElementById('errName'), !validName);
+    setError(document.getElementById('fPhone'), document.getElementById('errPhone'), !validPhone);
+    setError(document.getElementById('fDate'), document.getElementById('errDate'), !validDate);
+
+    if(!validName || !validPhone || !validDate){
+      var firstInvalid = form.querySelector('.field-error');
+      if(firstInvalid) firstInvalid.focus();
+      return;
+    }
+
+    var dateObj = new Date(dateVal + 'T00:00:00');
+    var dateLabel = dateObj.toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'});
+
+    var lines = [
+      'Hi Velora, I\'d like to reserve a chair.',
+      'Name: ' + name,
+      'Phone: ' + phone,
+      'Date: ' + dateLabel + (time ? ' at ' + time : ''),
+      service ? 'Treatment: ' + service : 'Treatment: not sure yet, please advise',
+    ];
+    if(notes) lines.push('Notes: ' + notes);
+
+    var message = encodeURIComponent(lines.join('\n'));
+    var url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + message;
+
+    successBox.classList.add('show');
+    window.open(url, '_blank', 'noopener');
+  });
+
+  ['fName','fPhone','fDate'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', function(){
+      setError(this, document.getElementById('err' + id.replace('f','')), false);
+    });
+  });
+
+  /* ---------- Scroll reveal ---------- */
+  if(!reduceMotion && 'IntersectionObserver' in window){
+    var revealTargets = document.querySelectorAll('.about-grid, .menu-columns, .gallery-grid, .process-row, .test-wrap, .faq-list, .book-grid');
+    revealTargets.forEach(function(el){ el.style.opacity = 0; el.style.transform = 'translateY(16px)'; el.style.transition = 'opacity .6s ease, transform .6s ease'; });
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.style.opacity = 1;
+          entry.target.style.transform = 'translateY(0)';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.15});
+    revealTargets.forEach(function(el){ observer.observe(el); });
+  }
+})();
+</script>
+
+</body>
+</html>
